@@ -1,0 +1,835 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.5.4"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1655281872258,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "content": "<center><h1>MONA-LISA</h1>\n<h3><i> Monitoring Application of Mongolian Network</i></h3></center>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.5.4",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 3
+      },
+      "id": 2,
+      "maxPerRow": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeat": "station",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> filter(fn: (r) => r[\"location\"] == \"${station}\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: true)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "${station}",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "${__field.labels._field}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 12
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.4",
+      "repeat": "xat_station",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_XAT\")\n  |> filter(fn: (r) => r[\"_field\"] == \"vault0_temperature\" or r[\"_field\"] == \"vault0_humidity\" or r[\"_field\"] == \"computer_current\" or r[\"_field\"] == \"device_current\" or r[\"_field\"] == \"computer_voltage\" or r[\"_field\"] == \"device_voltage\" or r[\"_field\"] == \"digitizer_current\" or r[\"_field\"] == \"telemeter_voltage\" or r[\"_field\"] == \"telemeter_current\" or r[\"_field\"] == \"seismometer_temperature\" or r[\"_field\"] == \"saxiul\" or r[\"_field\"] == \"outside_temperature\" or r[\"_field\"] == \"loop\" or r[\"_field\"] == \"door_2\" or r[\"_field\"] == \"door_1\" or r[\"_field\"] == \"digitizer_voltage\" or r[\"_field\"] == \"vault1_humidity\" or r[\"_field\"] == \"vault1_temperature\" or r[\"_field\"] == \"vpn_current\" or r[\"_field\"] == \"vpn_voltage\" or r[\"_field\"] == \"water_presence\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_field\",\"_value\"])\n",
+          "refId": "HEALTH_STATES_XAT"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_BATTERYVOLTAGE\")\n  |> filter(fn: (r) => r[\"_field\"] == \"available_disksize\" or r[\"_field\"] == \"total_disksize\" or r[\"_field\"] == \"used_disksize\" or r[\"_field\"] == \"battery_voltage\" or r[\"_field\"] == \"temperature\" or r[\"_field\"] == \"e_massposition\" or r[\"_field\"] == \"n_massposition\" or r[\"_field\"] == \"z_massposition\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_field\",\"_value\"])",
+          "refId": "HEALTH_STATES_BATTERYVOLTAGE"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_DISKSIZE1\")\n  |> filter(fn: (r) => r[\"_field\"] == \"available_disksize\" or r[\"_field\"] == \"total_disksize\" or r[\"_field\"] == \"used_disksize\" or r[\"_field\"] == \"battery_voltage\" or r[\"_field\"] == \"temperature\" or r[\"_field\"] == \"e_massposition\" or r[\"_field\"] == \"n_massposition\" or r[\"_field\"] == \"z_massposition\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_field\",\"_value\"])",
+          "refId": "HEALTH_STATES_DISKSIZE1"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_MASS_POSITION\")\n  |> filter(fn: (r) => r[\"_field\"] == \"available_disksize\" or r[\"_field\"] == \"total_disksize\" or r[\"_field\"] == \"used_disksize\" or r[\"_field\"] == \"battery_voltage\" or r[\"_field\"] == \"temperature\" or r[\"_field\"] == \"e_massposition\" or r[\"_field\"] == \"n_massposition\" or r[\"_field\"] == \"z_massposition\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_field\",\"_value\"])",
+          "refId": "HEALTH_STATES_MASS_POSITION"
+        }
+      ],
+      "title": "State of Health: ${xat_station}",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "Last data Mass Position",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_value"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 275604410000000000
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 2,
+        "y": 14
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 22
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "import \"regexp\"\n\ntime2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_MASS_POSITION\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keyValues(keyColumns: [\"_time\"])\n  |> toUInt()\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> unique(column: \"_value\")\n\n\ndata\n  |> map(fn:(r) => ({ r with _string_value: regexp.findString(r:/.*(.?)ms/, v: string(v: duration(v: time2 - uint(v: r._value)))) }))\n",
+          "refId": "XAT"
+        }
+      ],
+      "title": "Mass Position Last data",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "Last data Disk Size",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_value"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 275604410000000000
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 7,
+        "y": 14
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 22
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "import \"regexp\"\n\ntime2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_DISKSIZE1\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keyValues(keyColumns: [\"_time\"])\n  |> toUInt()\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> unique(column: \"_value\")\n\n\ndata\n  |> map(fn:(r) => ({ r with _string_value: regexp.findString(r:/.*(.?)ms/, v: string(v: duration(v: time2 - uint(v: r._value)))) }))\n",
+          "refId": "XAT"
+        }
+      ],
+      "title": "Disk Size Last data",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "Last data Battery Voltage",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_value"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 275604410000000000
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 12,
+        "y": 14
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 22
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "import \"regexp\"\n\ntime2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_BATTERYVOLTAGE\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keyValues(keyColumns: [\"_time\"])\n  |> toUInt()\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> unique(column: \"_value\")\n\n\ndata\n  |> map(fn:(r) => ({ r with _string_value: regexp.findString(r:/.*(.?)ms/, v: string(v: duration(v: time2 - uint(v: r._value)))) }))\n",
+          "refId": "XAT"
+        }
+      ],
+      "title": "Battery Voltage Last data",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "Last data XAT",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_value"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 275604410000000000
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 17,
+        "y": 14
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 22
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "import \"regexp\"\n\ntime2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_XAT\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keyValues(keyColumns: [\"_time\"])\n  |> toUInt()\n  |> keep(columns: [\"_time\", \"_value\"])\n  |> unique(column: \"_value\")\n\n\ndata\n  |> map(fn:(r) => ({ r with _string_value: regexp.findString(r:/.*(.?)ms/, v: string(v: duration(v: time2 - uint(v: r._value)))) }))\n",
+          "refId": "XAT"
+        }
+      ],
+      "title": "XAT Last data",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "${__field.labels.location}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": -1e-8
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 1e-8
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> mean(column: \"_value\")\n  |> keep(columns: [\"location\", \"_value\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Flat Signal Probe",
+      "type": "stat"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> distinct(column: \"location\")\n  |> keep(columns: [\"_value\"])",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Rapid View Station",
+        "multi": true,
+        "name": "station",
+        "options": [],
+        "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop:v.timeRangeStop)\n  |> distinct(column: \"location\")\n  |> keep(columns: [\"_value\"])",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop:v.timeRangeStop)\n  |> distinct(column: \"location\")\n  |> keep(columns: [\"_value\"])\n\n  ",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Health States Station",
+        "multi": true,
+        "name": "xat_station",
+        "options": [],
+        "query": "from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop:v.timeRangeStop)\n  |> distinct(column: \"location\")\n  |> keep(columns: [\"_value\"])\n\n  ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "time2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_XAT\")\n  |> filter(fn: (r) => r[\"_field\"] == \"computer_voltage\" or r[\"_field\"] == \"device_current\" or r[\"_field\"] == \"digitizer_current\" or r[\"_field\"] == \"device_voltage\" or r[\"_field\"] == \"computer_current\" or r[\"_field\"] == \"seismometer_temperature\" or r[\"_field\"] == \"telemeter_current\" or r[\"_field\"] == \"telemeter_voltage\" or r[\"_field\"] == \"vault0_humidity\" or r[\"_field\"] == \"vault0_temperature\" or r[\"_field\"] == \"saxiul\" or r[\"_field\"] == \"outside_temperature\" or r[\"_field\"] == \"loop\" or r[\"_field\"] == \"door_2\" or r[\"_field\"] == \"door_1\" or r[\"_field\"] == \"digitizer_voltage\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_time\"])\n  |> unique(column: \"_time\")\n  \ndata\n  |> map(fn:(r) => ({ r with _value: string(v: duration(v: time2 - uint(v: r._time))) }))\n  ",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "time_xat",
+        "options": [],
+        "query": "time2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_XAT\")\n  |> filter(fn: (r) => r[\"_field\"] == \"computer_voltage\" or r[\"_field\"] == \"device_current\" or r[\"_field\"] == \"digitizer_current\" or r[\"_field\"] == \"device_voltage\" or r[\"_field\"] == \"computer_current\" or r[\"_field\"] == \"seismometer_temperature\" or r[\"_field\"] == \"telemeter_current\" or r[\"_field\"] == \"telemeter_voltage\" or r[\"_field\"] == \"vault0_humidity\" or r[\"_field\"] == \"vault0_temperature\" or r[\"_field\"] == \"saxiul\" or r[\"_field\"] == \"outside_temperature\" or r[\"_field\"] == \"loop\" or r[\"_field\"] == \"door_2\" or r[\"_field\"] == \"door_1\" or r[\"_field\"] == \"digitizer_voltage\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_time\"])\n  |> unique(column: \"_time\")\n  \ndata\n  |> map(fn:(r) => ({ r with _value: string(v: duration(v: time2 - uint(v: r._time))) }))\n  ",
+        "refresh": 1,
+        "regex": "/(.+)s.(.+)ms/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "time2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_DISKSIZE1\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_time\"])\n  |> unique(column: \"_time\")\n  \ndata\n  |> map(fn:(r) => ({ r with _value: string(v: duration(v: time2 - uint(v: r._time))) }))\n  ",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "time_xat_disksize1",
+        "options": [],
+        "query": "time2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_DISKSIZE1\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_time\"])\n  |> unique(column: \"_time\")\n  \ndata\n  |> map(fn:(r) => ({ r with _value: string(v: duration(v: time2 - uint(v: r._time))) }))\n  ",
+        "refresh": 1,
+        "regex": "/(.+)s.(.+)ms/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "time2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_BATTERYVOLTAGE\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_time\"])\n  |> unique(column: \"_time\")\n  \ndata\n  |> map(fn:(r) => ({ r with _value: string(v: duration(v: time2 - uint(v: r._time))) }))\n  ",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "time_xat_batteryvoltage",
+        "options": [],
+        "query": "time2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_BATTERYVOLTAGE\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_time\"])\n  |> unique(column: \"_time\")\n  \ndata\n  |> map(fn:(r) => ({ r with _value: string(v: duration(v: time2 - uint(v: r._time))) }))\n  ",
+        "refresh": 1,
+        "regex": "/(.+)s.(.+)ms/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB}"
+        },
+        "definition": "time2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_MASS_POSITION\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_time\"])\n  |> unique(column: \"_time\")\n  \ndata\n  |> map(fn:(r) => ({ r with _value: string(v: duration(v: time2 - uint(v: r._time))) }))\n  ",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "time_xat_mass_position",
+        "options": [],
+        "query": "time2 = uint(v: now())\n\ndata = from(bucket: \"health_states\")\n  |> range(start: 2021-01-01T00:00:00Z, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"HEALTH_STATES_MASS_POSITION\")\n  |> filter(fn: (r) => r[\"location\"] == \"${xat_station}\")\n  |> keep(columns: [\"_time\"])\n  |> unique(column: \"_time\")\n  \ndata\n  |> map(fn:(r) => ({ r with _value: string(v: duration(v: time2 - uint(v: r._time))) }))\n  ",
+        "refresh": 1,
+        "regex": "/(.+)s.(.+)ms/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "MONA-LISA",
+  "uid": "FWXNPcrnk",
+  "version": 55,
+  "weekStart": ""
+}

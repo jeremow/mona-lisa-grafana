@@ -1,0 +1,1305 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": [],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "agenty-flowcharting-panel",
+      "name": "FlowCharting",
+      "version": "0.9.1"
+    },
+    {
+      "type": "panel",
+      "id": "alertlist",
+      "name": "Alert list",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.5.4"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "content": "<center><h1>UB-DASE</h1></center>\n",
+        "mode": "html"
+      },
+      "pluginVersion": "8.5.4",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 3,
+        "x": 0,
+        "y": 2
+      },
+      "id": 13,
+      "options": {
+        "alertInstanceLabelFilter": "",
+        "alertName": "",
+        "dashboardAlerts": true,
+        "groupBy": [],
+        "groupMode": "default",
+        "maxItems": 20,
+        "sortOrder": 1,
+        "stateFilter": {
+          "error": true,
+          "firing": true,
+          "inactive": true,
+          "noData": true,
+          "normal": true,
+          "pending": true
+        }
+      },
+      "title": "Alerts",
+      "type": "alertlist"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "flowchartsData": {
+        "flowcharts": [
+          {
+            "allowDrawio": true,
+            "center": true,
+            "csv": "## See more information for the syntax at https://drawio-app.com/import-from-csv-to-drawio/\n##\n## Example CSV. Use ## for comments and # for configuration.\n## The following names are reserved and should not be used (or ignored):\n## id, tooltip, placeholder(s), link and label (see below)\n##\n#\n## Node label with placeholders and HTML.\n## Default is '%name_of_first_column%'.\n#\n# label: %name%<br><i style=\"color:gray;\">%position%</i><br><a href=\"mailto:%email%\">Email</a>\n#\n## Node style (placeholders are replaced once).\n## Default is the current style for nodes.\n#\n# style: label;image=%image%;whiteSpace=wrap;html=1;rounded=1;fillColor=%fill%;strokeColor=%stroke%;\n#\n## Parent style for nodes with child nodes (placeholders are replaced once).\n#\n# parentstyle: swimlane;whiteSpace=wrap;html=1;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;\n#\n## Optional column name that contains a reference to a named style in styles.\n## Default is the current style for nodes.\n#\n# stylename: -\n#\n## JSON for named styles of the form {\"name\": \"style\", \"name\": \"style\"} where style is a cell style with\n## placeholders that are replaced once.\n#\n# styles: -\n#\n## Optional column name that contains a reference to a named label in labels.\n## Default is the current label.\n#\n# labelname: -\n#\n## JSON for named labels of the form {\"name\": \"label\", \"name\": \"label\"} where label is a cell label with\n## placeholders.\n#\n# labels: -\n#\n## Uses the given column name as the identity for cells (updates existing cells).\n## Default is no identity (empty value or -).\n#\n# identity: -\n#\n## Uses the given column name as the parent reference for cells. Default is no parent (empty or -).\n## The identity above is used for resolving the reference so it must be specified.\n#\n# parent: -\n#\n## Adds a prefix to the identity of cells to make sure they do not collide with existing cells (whose\n## IDs are numbers from 0..n, sometimes with a GUID prefix in the context of realtime collaboration).\n## Default is csvimport-.\n#\n# namespace: csvimport-\n#\n## Connections between rows (\"from\": source colum, \"to\": target column).\n## Label, style and invert are optional. Defaults are '', current style and false.\n## If placeholders are used in the style, they are replaced with data from the source.\n## An optional placeholders can be set to target to use data from the target instead.\n## In addition to label, an optional fromlabel and tolabel can be used to name the column\n## that contains the text for the label in the edges source or target (invert ignored).\n## The label is concatenated in the form fromlabel + label + tolabel if all are defined.\n## The target column may contain a comma-separated list of values.\n## Multiple connect entries are allowed.\n#\n# connect: {\"from\": \"manager\", \"to\": \"name\", \"invert\": true, \"label\": \"manages\", \\\n#          \"style\": \"curved=1;endArrow=blockThin;endFill=1;fontSize=11;\"}\n# connect: {\"from\": \"refs\", \"to\": \"id\", \"style\": \"curved=1;fontSize=11;\"}\n#\n## Node x-coordinate. Possible value is a column name. Default is empty. Layouts will\n## override this value.\n#\n# left: \n#\n## Node y-coordinate. Possible value is a column name. Default is empty. Layouts will\n## override this value.\n#\n# top: \n#\n## Node width. Possible value is a number (in px), auto or an @ sign followed by a column\n## name that contains the value for the width. Default is auto.\n#\n# width: auto\n#\n## Node height. Possible value is a number (in px), auto or an @ sign followed by a column\n## name that contains the value for the height. Default is auto.\n#\n# height: auto\n#\n## Padding for autosize. Default is 0.\n#\n# padding: -12\n#\n## Comma-separated list of ignored columns for metadata. (These can be\n## used for connections and styles but will not be added as metadata.)\n#\n# ignore: id,image,fill,stroke,refs,manager\n#\n## Column to be renamed to link attribute (used as link).\n#\n# link: url\n#\n## Spacing between nodes. Default is 40.\n#\n# nodespacing: 40\n#\n## Spacing between levels of hierarchical layouts. Default is 100.\n#\n# levelspacing: 100\n#\n## Spacing between parallel edges. Default is 40. Use 0 to disable.\n#\n# edgespacing: 40\n#\n## Name or JSON of layout. Possible values are auto, none, verticaltree, horizontaltree,\n## verticalflow, horizontalflow, organic, circle or a JSON string as used in Layout, Apply.\n## Default is auto.\n#\n# layout: auto\n#\n## ---- CSV below this line. First line are column names. ----\nname,position,id,location,manager,email,fill,stroke,refs,url,image\nEvan Miller,CFO,emi,Office 1,,me@example.com,#dae8fc,#6c8ebf,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-9-2-128.png\nEdward Morrison,Brand Manager,emo,Office 2,Evan Miller,me@example.com,#d5e8d4,#82b366,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-10-3-128.png\nRon Donovan,System Admin,rdo,Office 3,Evan Miller,me@example.com,#d5e8d4,#82b366,\"emo,tva\",https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-2-128.png\nTessa Valet,HR Director,tva,Office 4,Evan Miller,me@example.com,#d5e8d4,#82b366,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-3-128.png\n",
+            "download": false,
+            "editorTheme": "dark",
+            "editorUrl": "https://www.draw.io",
+            "enableAnim": true,
+            "grid": false,
+            "lock": true,
+            "name": "Main",
+            "scale": true,
+            "tooltip": true,
+            "type": "xml",
+            "url": "http://<YourUrl>/<Your XML/drawio file/api>",
+            "xml": "<mxfile host=\"app.diagrams.net\" modified=\"2022-06-15T07:58:29.122Z\" agent=\"5.0 (X11)\" etag=\"ECpZiZR7uyKvFWmZuw5Z\" version=\"20.0.1\" type=\"embed\"><diagram id=\"yPg6cth4rqscRhtGY-8q\" name=\"Page-1\">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</diagram></mxfile>",
+            "zoom": "100%"
+          }
+        ]
+      },
+      "format": "short",
+      "graphId": "flowchart_15",
+      "gridPos": {
+        "h": 15,
+        "w": 13,
+        "x": 3,
+        "y": 2
+      },
+      "id": 15,
+      "newFlag": false,
+      "rulesData": {
+        "rulesData": [
+          {
+            "aggregation": "current",
+            "alias": "ALFM-CPZ",
+            "colors": [
+              "#C8F2C2",
+              "#FFA6B0",
+              "#C8F2C2"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 1,
+            "overlayIcon": false,
+            "pattern": "/trace UB.ALFM.*/",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [
+              {
+                "colorOn": "a",
+                "hidden": false,
+                "pattern": "alfm",
+                "style": "fillColor"
+              }
+            ],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [
+              -1e-7,
+              1e-7
+            ],
+            "tooltip": true,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "UGDM-CPZ",
+            "colors": [
+              "#C8F2C2",
+              "#FFA6B0",
+              "#C8F2C2"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 2,
+            "overlayIcon": false,
+            "pattern": "trace UB.UGDM..SHZ",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [
+              {
+                "colorOn": "a",
+                "hidden": false,
+                "pattern": "ugdm",
+                "style": "fillColor"
+              }
+            ],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [
+              -1e-7,
+              1e-7
+            ],
+            "tooltip": true,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "SEMM-CPZ",
+            "colors": [
+              "#C8F2C2",
+              "#FFA6B0",
+              "#C8F2C2"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 3,
+            "overlayIcon": false,
+            "pattern": "trace UB.SEMM..SHZ",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [
+              {
+                "colorOn": "a",
+                "hidden": false,
+                "pattern": "semm",
+                "style": "fillColor"
+              }
+            ],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [
+              -1e-7,
+              1e-7
+            ],
+            "tooltip": true,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "ARTM-CPZ",
+            "colors": [
+              "#C8F2C2",
+              "#FFA6B0",
+              "#C8F2C2"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": true,
+            "gradient": false,
+            "hidden": false,
+            "invert": true,
+            "linkData": [],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 4,
+            "overlayIcon": false,
+            "pattern": "trace UB.ARTM..SHZ",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [
+              {
+                "colorOn": "a",
+                "hidden": false,
+                "pattern": "artm",
+                "style": "fillColor"
+              }
+            ],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [
+              -1e-7,
+              1e-7
+            ],
+            "tooltip": true,
+            "tooltipColors": true,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "avg",
+            "alias": "ALFM_no_data",
+            "colors": [
+              "#C8F2C2",
+              "#FFA6B0"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": true,
+            "linkData": [],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 5,
+            "overlayIcon": false,
+            "pattern": "/no_data UB.ALFM.*/",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [
+              {
+                "colorOn": "a",
+                "hidden": false,
+                "pattern": "artm",
+                "style": "fillColor"
+              }
+            ],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [
+              "/.*/"
+            ],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [
+              1
+            ],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "avg",
+            "alias": "UGDM_no_data",
+            "colors": [
+              "#C8F2C2",
+              "#FFA6B0"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": true,
+            "linkData": [],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 6,
+            "overlayIcon": false,
+            "pattern": "no_data UB.UGDM..SHZ",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [
+              {
+                "colorOn": "a",
+                "hidden": false,
+                "pattern": "artm",
+                "style": "fillColor"
+              }
+            ],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [
+              "/.*/"
+            ],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [
+              1
+            ],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "avg",
+            "alias": "SEMM_no_data",
+            "colors": [
+              "#C8F2C2",
+              "#FFA6B0"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": true,
+            "linkData": [],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 7,
+            "overlayIcon": false,
+            "pattern": "no_data UB.SEMM..SHZ",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [
+              {
+                "colorOn": "a",
+                "hidden": false,
+                "pattern": "artm",
+                "style": "fillColor"
+              }
+            ],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [
+              "/.*/"
+            ],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [
+              1
+            ],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "avg",
+            "alias": "ARTM_no_data",
+            "colors": [
+              "#C8F2C2",
+              "#FFA6B0"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": true,
+            "linkData": [],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 8,
+            "overlayIcon": false,
+            "pattern": "no_data UB.ARTM..SHZ",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [
+              {
+                "colorOn": "a",
+                "hidden": false,
+                "pattern": "artm",
+                "style": "fillColor"
+              }
+            ],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [
+              "/.*/"
+            ],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [
+              1
+            ],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          }
+        ]
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "\nfrom(bucket: \"seismic-ub\")\n  |> range(start: -2m, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: true)\n  |> map(\n        fn: (r) => ({\n            _measurement: r._measurement,\n            _field: \"no_data\",\n            _time: r._time,\n            _start: r._start,\n            _stop: r._stop,\n            _value: if exists r._value then 0 else 1,\n            location: r.location,\n        }),\n    )\n  |> yield(name: \"nodata\")",
+          "refId": "alert_no_data"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: -2m, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: true)\n  |> yield(name: \"mean\")",
+          "refId": "seismic-data"
+        }
+      ],
+      "title": "Synoptic",
+      "type": "agenty-flowcharting-panel",
+      "valueName": "current",
+      "version": "0.9.0"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 2
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> filter(fn: (r) => r[\"location\"] == \"UB.SEMM..SHZ\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "UB.SEMM..SHZ",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 7
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> filter(fn: (r) => r[\"location\"] == \"UB.ALFM..SHZ\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "UB.ALFM..SHZ",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> filter(fn: (r) => r[\"location\"] == \"UB.UGDM..SHZ\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "UB.UGDM..SHZ",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 17
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> filter(fn: (r) => r[\"location\"] == \"UB.ARTM..SHZ\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "UB.ARTM..SHZ",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 22
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> filter(fn: (r) => r[\"location\"] == \"UB.ALFM..MHZ\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "UB.ALFM..MHZ",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 27
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> filter(fn: (r) => r[\"location\"] == \"UB.ALFM..MHE\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "UB.ALFM..MHE",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 32
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "from(bucket: \"seismic-ub\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"SEISMIC_DATA\")\n  |> filter(fn: (r) => r[\"_field\"] == \"trace\")\n  |> filter(fn: (r) => r[\"location\"] == \"UB.ALFM..MHN\")\n  |> aggregateWindow(every: 500ms, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "UB.ALFM..MHN",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "UB-DASE",
+  "uid": "ruBuHf9nz",
+  "version": 51,
+  "weekStart": ""
+}
